@@ -113,7 +113,9 @@ Use code with caution.
 | 2026-05-29 01:57:17 | nh-wks-it-01 | m.reed | Exfiltration: Staged .zip archive copied completely across the virtual pipe channel onto the attacker's redirected physical drive location \\tsclient\G\Temp\NimbusSupport\. | T1048.003 | DeviceFileEvents |
 | 2026-05-29 01:59:29 | nh-wks-it-01 | m.reed | Threat actor cleanly logs off terminal session; endpoint returns to normal idle processing background noise (HxTsr.exe). | — | DeviceProcessEvents |
 
-5. Technical Findings
+---
+
+## 5. Technical Findings
 
 
 5.1 Initial Access
@@ -211,7 +213,9 @@ I documented that data collection, staging, and exfiltration were executed effic
   
 • My Interpretation: The attacker intentionally audited and leveraged native RDP local client drive redirection mechanisms, allowing them to quietly exfiltrate sensitive files straight through their active management session without generating anomalies on internet-facing network boundaries.
 
-6. MITRE ATT&CK Mapping
+---
+
+## 6. MITRE ATT&CK Mapping
 
 
 Tactic	Technique ID	Technique Name	Evidence Reference
@@ -239,7 +243,9 @@ Collection	T1560.001	Archive Collected Data: Archive via Utility	Section 5.10; P
 Exfiltration	T1048.003	Exfiltration Over Alternative Protocol: Exfiltration Over RDP	Section 5.10; Copy tracking records routing output to \\tsclient\G channel
 
 
-7. Impact Assessment
+---
+
+## 7. Impact Assessment
 
 • Systems Compromised: Workstation asset nh-wks-it-01 suffered interactive user account compromise. Perimeter gateway jump platform WIN-EXT-01 was successfully exploited as an internal routing pivot path.
 
@@ -251,7 +257,9 @@ Exfiltration	T1048.003	Exfiltration Over Alternative Protocol: Exfiltration Over
 
 • Legal and Regulatory Exposure: High. Because the threat actor successfully stole confidential records containing employee PII, this incident directly breaches standard data protection regulations. Nimbus Health faces a mandatory legal obligation to initiate a formal data breach notification review, document the specific files lost, and officially report the exposure event to regulatory authorities and all affected individuals.
 
-8. Root Cause
+---
+
+## 8. Root Cause
 
 I identified the root cause of this incident as a critical flaw in organizational security procedures, driven by a rushed onboarding process that prioritized operational growth over basic security controls. This procedural failure led directly to two major vulnerabilities:
 
@@ -259,9 +267,9 @@ I identified the root cause of this incident as a critical flaw in organizationa
 2. 
 3. Inadequate Access Hardening (Procedural Deficit): Management rushed new hires onto existing, unvetted shared workstations without enforcing strong password complexity rules, restricting network discovery tools, or requiring Multi-Factor Authentication (MFA) on external connections, allowing the stolen credentials to be easily reused against internet-facing endpoints.
 
+---
 
-
-9. Indicators of Compromise (IOCs)
+## 9. Indicators of Compromise (IOCs)
 
 Type	Indicator	Context
 
@@ -283,8 +291,9 @@ Network Path	\\tsclient\G\Temp\NimbusSupport	Target destination folder on the at
 
 Account	m.reed	Compromised Helpdesk Support corporate identity used to validate all internal system discovery operations.
 
+---
 
-10. Containment, Eradication and Recovery
+## 10. Containment, Eradication and Recovery
 
 
 Priority	Action	Rationale	Status
@@ -300,7 +309,10 @@ Priority	Action	Rationale	Status
 3	Sanitize Workstation Endpoint File System Cache	Delete local data staging remnants inside path C:\Users\m.reed\Documents\SupportReview\ on host workstation nh-wks-it-01.	Recommended
 
 
-11. Recommendations and Lessons Learned
+---
+
+
+## 11. Recommendations and Lessons Learned
 
 Based on my investigation, I recommend the following actions:
 
@@ -312,7 +324,9 @@ Based on my investigation, I recommend the following actions:
 
 • Restrict Local Network Discovery Utilities: Enforce restrictive execution policies on standard user profiles to block non-administrative accounts from running broad network and directory discovery tools (net.exe, whoami, ipconfig), limiting an attacker's ability to map the environment during a compromise.
 
-12. Appendices: KQL Queries Used
+---
+
+## 12. Appendices: KQL Queries Used
 
 1. The Initial Scout & Entry Analysis Queries (Click to expand)
 
